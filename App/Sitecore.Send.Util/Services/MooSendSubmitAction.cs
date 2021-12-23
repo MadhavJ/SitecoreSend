@@ -16,8 +16,8 @@ namespace Sitecore.Send.Util.Services
     public partial class MooSendSubmitAction : SubmitActionBase<string>
     {
         private readonly Uri baseAddress = new Uri("https://api.moosend.com/v3/");
-        private readonly string memberListId = "987c9c1c-7231-4a7e-888c-19ba1e109a14"; // Update with member list ID from your Sitecore Send instance
-        private readonly string mooSendApiKey = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXX"; //Update with Send unique API key from your Sitecore Send instance
+        private readonly string memberListId = "{{Member List Id}}"; // Update with member list ID from your Sitecore Send instance
+        private readonly string mooSendApiKey = "{{Send API Key}}"; //Update with Send unique API key from your Sitecore Send instance
 
         public MooSendSubmitAction(ISubmitActionData submitActionData) : base(submitActionData)
         {
