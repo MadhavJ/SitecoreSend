@@ -1,5 +1,5 @@
 # Sitecore Send
-Repository contains utility to submit custom form action from Sitecore to Send instance.
+Small implementation utility to submit custom form action from Sitecore to Send instance.
 
 # Prerequisites
 ←`Sitecore Instance 10.2`
