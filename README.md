@@ -4,7 +4,7 @@ Repository contains utility to submit custom form action from Sitecore to Send i
 # Prerequisites
 ←`Sitecore Instance 10.2`
 
-←`Sitecore helix basic Company` : You can choose implementations from https://sitecore.github.io/Helix.Examples/examples/helix-basic-company.html'
+←`Sitecore helix basic Company` : You can choose implementations from https://sitecore.github.io/Helix.Examples/examples/helix-basic-company.html
 
 ←`Choice of IDE` : For this implementation Visual Studio 2019 is used.
 
