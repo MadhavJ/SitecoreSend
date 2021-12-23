@@ -1,5 +1,5 @@
 # Sitecore Send
-Small implementation utility to submit custom form action from Sitecore to Send instance.
+Utility to submit custom form action from Sitecore to Send instance.
 
 # Prerequisites
 ←`Sitecore Instance 10.2`
