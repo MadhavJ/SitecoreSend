@@ -11,6 +11,7 @@ Repository contains utility to submit custom form action from Sitecore to Send i
 ## What's in this project?
 
 ← `App Folder`: Visual Studio Solution for Sitecore Send utility.
+
 ← `SitecorePackage Folder`: Contains Sitecore package which needs to be installed after your instance is loaded with Basic company helix implementation.
 
 ← `Sitecore.Send.util`: This project Contains `MoosendSubmitAction.cs` which has implementation to perform custom submit to Send Instance with data collected from Sitecore Form/Page.
