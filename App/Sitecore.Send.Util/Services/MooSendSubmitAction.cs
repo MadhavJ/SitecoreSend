@@ -23,47 +23,52 @@ namespace Sitecore.Send.Util.Services
         {
         }
 
-       
         /// <summary>
-        /// Tries to convert the specified <paramref name="value" /> to an instance of the specified target type.
+        /// Execute method Override
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="target">The target object.</param>
-        /// <returns>
-        /// true if <paramref name="value" /> was converted successfully; otherwise, false.
-        /// </returns>
-        protected override bool TryParse(string value, out string target)
-        {
-            target = string.Empty;
-            return true;
-        }
-
+        /// <param name="data"></param>
+        /// <param name="formSubmitContext"></param>
+        /// <returns>bool value showing status of task completion</returns>
         protected override bool Execute(string data, FormSubmitContext formSubmitContext)
         {
             Assert.ArgumentNotNull(formSubmitContext, "formSubmitContext");
             var mooSendData = GetMooSendJson(formSubmitContext);
-            Task<Task> executePost = Task.Run(async () => await ExecuteCall(JsonConvert.SerializeObject(mooSendData)));
-            return true;
+            Task<bool> executePost = Task.Run(async () => await ExecuteCall(JsonConvert.SerializeObject(mooSendData)));
+            return executePost.Result;
         }
-
-        private async Task<Task> ExecuteCall(string data)
+        
+        /// <summary>
+        /// Async Call to Send API for subscription using form data captured from front end
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private async Task<bool> ExecuteCall(string data)
         {
-            using (var httpClient = new HttpClient { BaseAddress = baseAddress })
+            try
             {
-                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
-
-                using (var content = new StringContent(data, Encoding.Default, "application/json"))
+                using (var httpClient = new HttpClient { BaseAddress = baseAddress })
                 {
-                    using (var response = await httpClient.PostAsync($"subscribers/{memberListId}/subscribe.json?apiKey={mooSendApiKey}", content))
+                    httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
+
+                    using (var content = new StringContent(data, Encoding.Default, "application/json"))
                     {
-                        string responseData = await response.Content.ReadAsStringAsync();
-                        if (string.IsNullOrEmpty(responseData))
+                        using (var response = await httpClient.PostAsync($"subscribers/{memberListId}/subscribe.json?apiKey={mooSendApiKey}", content))
                         {
-                            Console.WriteLine("Not able to submit to moosend");
+                            string responseData = await response.Content.ReadAsStringAsync();
+                            if (string.IsNullOrEmpty(responseData))
+                            {
+                                Log.Error("Unexpected response from Sitecore Send", responseData);
+                                return false;
+                            }
+                            return true;
                         }
-                        return Task.CompletedTask;
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Unexpected exception occured while executing post to Sitecore Send", ex.StackTrace);
+                return false;
             }
         }
 
